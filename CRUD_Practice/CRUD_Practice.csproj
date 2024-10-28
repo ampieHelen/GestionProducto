@@ -15,6 +15,7 @@
   <ItemGroup>
     <Folder Include="Views\Marca\" />
     <Folder Include="Views\Categoria\" />
+    <Folder Include="Views\Proveedores\" />
   </ItemGroup>
 
 </Project>

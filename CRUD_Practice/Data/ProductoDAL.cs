@@ -31,12 +31,11 @@ namespace CRUD_Practice.Data
                         var producto = new Producto
                         {
                             ProductoID = (int)reader["ProductoID"],
-                            Nombre = reader["ProductoNombre"].ToString(), // Asegúrate de usar el alias correcto
-                            Precio = (decimal)reader["Precio"],
+                            Nombre = reader["ProductoNombre"].ToString(),
                      
                             Marca = new Marca
                             {
-                                Nombre = reader["MarcaNombre"].ToString() // Asignar el nombre de la marca
+                                Nombre = reader["MarcaNombre"].ToString()
                             }
                         };
                         productos.Add(producto);
