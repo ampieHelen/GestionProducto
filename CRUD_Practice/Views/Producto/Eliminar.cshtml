@@ -1,0 +1,22 @@
+﻿@model CRUD_Practice.Models.Producto
+
+<h2>Eliminar Producto</h2>
+
+<div>
+    <h4>¿Estás seguro de que quieres eliminar este producto?</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Nombre</dt>
+        <dd class="col-sm-10">@Model.Nombre</dd>
+
+        <dt class="col-sm-2">Precio</dt>
+        <dd class="col-sm-10">@Model.Precio</dd>
+    </dl>
+
+    <form asp-action="Eliminar" method="post">
+        <input type="hidden" asp-for="ProductoID" />
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
