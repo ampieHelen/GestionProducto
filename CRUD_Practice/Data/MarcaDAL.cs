@@ -59,6 +59,7 @@ namespace CRUD_Practice.Data
                 SqlCommand cmd = new SqlCommand("spUpdateMarca", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@MarcaID", marca.MarcaID);
+                cmd.Parameters.AddWithValue("@Nombre", marca.Nombre);
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
