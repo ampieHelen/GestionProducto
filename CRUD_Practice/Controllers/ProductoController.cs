@@ -9,10 +9,14 @@ namespace CRUD_ADO.NET_Project.Controllers
     public class ProductoController : Controller
     {
         private readonly ProductoDAL _productoDAL;
+        private readonly MarcaDAL _marcaDAL;
+        private readonly CategoriaDAL _categoriaDAL;
 
-        public ProductoController(ProductoDAL productoDAL)
+        public ProductoController(ProductoDAL productoDAL, MarcaDAL marcaDal, CategoriaDAL categoriaDAL)
         {
             _productoDAL = productoDAL;
+            _marcaDAL = marcaDal;
+            _categoriaDAL = categoriaDAL;
         }
 
         public IActionResult Index()
@@ -24,6 +28,7 @@ namespace CRUD_ADO.NET_Project.Controllers
         public IActionResult Crear()
         {
             CargarMarcas();
+            CargarCategorias();
             return View();
         }
 
@@ -36,6 +41,7 @@ namespace CRUD_ADO.NET_Project.Controllers
                 return RedirectToAction("Index");
             }
             CargarMarcas();
+            CargarCategorias();
             return View(producto);
 
         }
@@ -44,6 +50,7 @@ namespace CRUD_ADO.NET_Project.Controllers
         {
             var producto = _productoDAL.ObtenerProductos().FirstOrDefault(p => p.ProductoID == id);
             CargarMarcas();
+            CargarCategorias();
             return View(producto);
         }
 
@@ -62,8 +69,14 @@ namespace CRUD_ADO.NET_Project.Controllers
 
         private void CargarMarcas()
         {
-            var marcas = _productoDAL.ObtenerMarcas();
+            var marcas = _marcaDAL.ObtenerMarcas();
             ViewBag.Marcas = new SelectList(marcas, "MarcaID", "Nombre");
+        }
+
+        private void CargarCategorias()
+        {
+            var categorias = _categoriaDAL.ObtenerCategorias();
+            ViewBag.Categorias = new SelectList(categorias, "CategoriaID", "Nombre");
         }
 
     }

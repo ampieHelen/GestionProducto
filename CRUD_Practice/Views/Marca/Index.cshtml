@@ -1,0 +1,28 @@
+﻿@model List<CRUD_Practice.Models.Marca>
+
+<h2>Lista de Marcas</h2>
+
+<a asp-action="Crear" class="btn btn-primary">Agregar Marca</a>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var marca in Model)
+        {
+            <tr>
+                <td>@marca.MarcaID</td>
+                <td>@marca.Nombre</td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@marca.MarcaID" class="btn btn-warning">Editar</a>
+                    <a asp-action="Eliminar" asp-route-id="@marca.MarcaID" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

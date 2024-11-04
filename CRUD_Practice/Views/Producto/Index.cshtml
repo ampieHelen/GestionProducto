@@ -11,6 +11,7 @@
             <th>Nombre</th>
             <th>Precio</th>
             <th>Marca</th>
+            <th>Categorías</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -22,6 +23,7 @@
                 <td>@producto.Nombre</td>
                 <td>@producto.Precio</td>
                 <td>@producto.Marca.Nombre</td>
+                <td>@producto.Categoria.Nombre</td>
                 <td>
                     <a asp-action="Editar" asp-route-id="@producto.ProductoID" class="btn btn-warning">Editar</a>
                     <a asp-action="Eliminar" asp-route-id="@producto.ProductoID" class="btn btn-danger">Eliminar</a>

@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ProductoDAL>();
+builder.Services.AddScoped<MarcaDAL>();
+builder.Services.AddScoped<CategoriaDAL>();
 
 
 var app = builder.Build();

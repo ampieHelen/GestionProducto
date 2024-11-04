@@ -1,0 +1,28 @@
+﻿@model List<CRUD_Practice.Models.Categoria>
+
+<h2>Lista de Categorías</h2>
+
+<a asp-action="Crear" class="btn btn-primary">Agregar Categoría</a>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var categoria in Model)
+        {
+            <tr>
+                <td>@categoria.CategoriaID</td>
+                <td>@categoria.Nombre</td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@categoria.CategoriaID" class="btn btn-warning">Editar</a>
+                    <a asp-action="Eliminar" asp-route-id="@categoria.CategoriaID" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -32,10 +32,15 @@ namespace CRUD_Practice.Data
                         {
                             ProductoID = (int)reader["ProductoID"],
                             Nombre = reader["ProductoNombre"].ToString(),
-                     
+                            Descripcion = reader["Descripcion"].ToString(),
+                            Precio = (decimal)reader["Precio"],
                             Marca = new Marca
                             {
                                 Nombre = reader["MarcaNombre"].ToString()
+                            },
+                            Categoria = new Categoria
+                            {
+                                Nombre = reader["CategoriaNombre"].ToString()
                             }
                         };
                         productos.Add(producto);
@@ -53,8 +58,10 @@ namespace CRUD_Practice.Data
                 SqlCommand cmd = new SqlCommand("spInsertProducto", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Nombre", producto.Nombre);
+                cmd.Parameters.AddWithValue("@Descripcion", producto.Descripcion);
                 cmd.Parameters.AddWithValue("@Precio", producto.Precio);
                 cmd.Parameters.AddWithValue("@MarcaID", producto.MarcaID);
+                cmd.Parameters.AddWithValue("@CategoriaID", producto.CategoriaID);
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -68,8 +75,10 @@ namespace CRUD_Practice.Data
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ProductoID", producto.ProductoID);
                 cmd.Parameters.AddWithValue("@Nombre", producto.Nombre);
+                cmd.Parameters.AddWithValue("@Descripcion", producto.Descripcion);
                 cmd.Parameters.AddWithValue("@Precio", producto.Precio);
                 cmd.Parameters.AddWithValue("@MarcaID", producto.MarcaID);
+                cmd.Parameters.AddWithValue("@CategoriaID", producto.CategoriaID);
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -87,28 +96,5 @@ namespace CRUD_Practice.Data
             }
         }
 
-        public List<Marca> ObtenerMarcas()
-        {
-            var marcas = new List<Marca>();
-            using (var conn = new SqlConnection(_connectionString))
-            {
-                SqlCommand cmd = new SqlCommand("spGetMarcas", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                conn.Open();
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        marcas.Add(new Marca
-                        {
-                            MarcaID = (int)reader["MarcaID"],
-                            Nombre = reader["Nombre"].ToString(),
-                           
-                        });
-                    }
-                }
-            }
-            return marcas;
-        }
     }
 }
