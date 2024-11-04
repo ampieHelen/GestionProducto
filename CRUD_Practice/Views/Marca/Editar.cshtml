@@ -1,0 +1,15 @@
+﻿@model CRUD_Practice.Models.Marca
+
+<h2>Editar Marca</h2>
+
+<form asp-action="Editar" method="post">
+    <input type="hidden" asp-for="MarcaID" />
+
+    <div class="form-group">
+        <label for="Nombre">Nombre</label>
+        <input type="text" class="form-control" asp-for="Nombre" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Guardar Cambios</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Cancelar</a>
+</form>
