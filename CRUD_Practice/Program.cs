@@ -7,7 +7,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ProductoDAL>();
 builder.Services.AddScoped<MarcaDAL>();
 builder.Services.AddScoped<CategoriaDAL>();
-
+builder.Services.AddScoped<ClienteDAL>();
+builder.Services.AddScoped<ProveedorDAL>();
 
 var app = builder.Build();
 

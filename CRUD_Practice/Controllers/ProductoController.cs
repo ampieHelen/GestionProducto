@@ -57,13 +57,20 @@ namespace CRUD_ADO.NET_Project.Controllers
         [HttpPost]
         public IActionResult Editar(ProductoDTO producto)
         {
-            _productoDAL.ActualizarProducto(producto);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _productoDAL.ActualizarProducto(producto);
+                TempData["Mensaje"] = "Producto editado con éxito.";
+                return RedirectToAction("Index");
+            }
+
+            return View(producto);
         }
 
         public IActionResult Eliminar(int id)
         {
             _productoDAL.EliminarProducto(id);
+            TempData["Mensaje"] = "Producto eliminado con éxito.";
             return RedirectToAction("Index");
         }
 

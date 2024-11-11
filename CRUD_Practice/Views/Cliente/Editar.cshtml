@@ -1,0 +1,27 @@
+﻿@model CRUD_Practice.Models.Cliente
+
+<h2>Editar Cliente</h2>
+
+<form asp-action="Editar" method="post">
+    <input type="hidden" asp-for="ClienteID" />
+
+    <div class="form-group">
+        <label for="Nombre">Nombre</label>
+        <input type="text" class="form-control" asp-for="Nombre" required />
+    </div>
+    <div class="form-group">
+        <label for="Nombre">Apellido</label>
+        <input type="text" class="form-control" asp-for="Apellido" required />
+    </div>
+    <div class="form-group">
+        <label for="Nombre">Dirección</label>
+        <input type="text" class="form-control" asp-for="Direccion" required />
+    </div>
+    <div class="form-group">
+        <label for="Nombre">Teléfono</label>
+        <input type="text" class="form-control" asp-for="Telefono" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Guardar Cambios</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Cancelar</a>
+</form>

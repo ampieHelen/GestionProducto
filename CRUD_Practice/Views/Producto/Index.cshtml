@@ -26,10 +26,19 @@
                 <td>@producto.Categoria.Nombre</td>
                 <td>
                     <a asp-action="Editar" asp-route-id="@producto.ProductoID" class="btn btn-warning">Editar</a>
-                    <a asp-action="Eliminar" asp-route-id="@producto.ProductoID" class="btn btn-danger">Eliminar</a>
+                    <form asp-action="Eliminar" asp-route-id="@producto.ProductoID" method="post" style="display:inline;" onsubmit="return confirmarEliminacion();">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
+@section Scripts {
+    <script>
+        function confirmarEliminacion() {
+            return confirm("¿Estás seguro de que deseas eliminar este producto?");
+        }
+    </script>
+}

@@ -1,0 +1,44 @@
+﻿@model List<CRUD_Practice.Models.Cliente>
+
+<h2>Lista de Clientes</h2>
+
+<a asp-action="Crear" class="btn btn-primary">Agregar Cliente</a>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in Model)
+        {
+            <tr>
+                <td>@cliente.ClienteID</td>
+                <td>@cliente.Nombre</td>
+                <td>@cliente.Apellido</td>
+                <td>@cliente.Direccion</td>
+                <td>@cliente.Telefono</td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@cliente.ClienteID" class="btn btn-warning">Editar</a>
+                    <form asp-action="Eliminar" asp-route-id="@cliente.ClienteID" method="post" style="display:inline;" onsubmit="return confirmarEliminacion();">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function confirmarEliminacion() {
+            return confirm("¿Estás seguro de que deseas eliminar este cliente?");
+        }
+    </script>
+}
