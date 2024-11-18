@@ -3,6 +3,7 @@ using CRUD_Practice.Models;
 using CRUD_Practice.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text.RegularExpressions;
 
 namespace CRUD_Practice.Controllers
 {
@@ -29,12 +30,23 @@ namespace CRUD_Practice.Controllers
         [HttpPost]
         public IActionResult Crear(Cliente cliente)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _clienteDAL.InsertarCliente(cliente);
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    _clienteDAL.InsertarCliente(cliente);
+                    TempData["Mensaje"] = "Cliente creada exitosamente.";
+                    return RedirectToAction("Index");
+                }
+                return View(cliente);
             }
-            return View(cliente);
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error al crear cliente: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar crear el cliente. Por favor, inténtelo de nuevo.";
+
+                return View(cliente);
+            }
 
         }
 
@@ -47,21 +59,41 @@ namespace CRUD_Practice.Controllers
         [HttpPost]
         public IActionResult Editar(Cliente cliente)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _clienteDAL.ActualizarCliente(cliente);
-                TempData["Mensaje"] = "Cliente editado con éxito.";
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    _clienteDAL.ActualizarCliente(cliente);
+                    TempData["Mensaje"] = "Cliente editado con éxito.";
+                    return RedirectToAction("Index");
+                }
 
-            return View(cliente);
+                return View(cliente);
+            }
+            catch( Exception ex)
+            {
+                Console.WriteLine($"Error al editar cliente: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar editar cliente. Por favor, inténtelo de nuevo.";
+
+                return View(cliente);
+            }
         }
 
         public IActionResult Eliminar(int id)
         {
-            _clienteDAL.EliminarCliente(id);
-            TempData["Mensaje"] = "Cliente eliminado con éxito.";
-            return RedirectToAction("Index");
+            try
+            {
+                _clienteDAL.EliminarCliente(id);
+                TempData["Mensaje"] = "Cliente eliminado con éxito.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al eliminar el cliente: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar eliminar el cliente. Por favor, inténtelo de nuevo.";
+
+                return RedirectToAction("Index");
+            }
         }
     }
 }

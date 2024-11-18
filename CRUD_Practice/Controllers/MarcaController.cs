@@ -27,13 +27,23 @@ namespace CRUD_ADO.NET_Project.Controllers
         [HttpPost]
         public IActionResult Crear(Marca marca)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _marcaDAL.InsertarMarca(marca);
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    _marcaDAL.InsertarMarca(marca);
+                    TempData["Mensaje"] = "Marca creada exitosamente.";
+                    return RedirectToAction("Index");
+                }
+                return View(marca);
             }
-            return View(marca);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al crear la marca: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar crear la marca. Por favor, inténtelo de nuevo.";
 
+                return View(marca);
+            }
         }
 
         public IActionResult Editar(int id)
@@ -45,14 +55,40 @@ namespace CRUD_ADO.NET_Project.Controllers
         [HttpPost]
         public IActionResult Editar(Marca marca)
         {
-            _marcaDAL.ActualizarMarca(marca);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _marcaDAL.ActualizarMarca(marca);
+                    TempData["Mensaje"] = "Marca editado con éxito.";
+                    return RedirectToAction("Index");
+                }
+                return View(marca);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error al editar marca: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar editar la marca. Por favor, inténtelo de nuevo.";
+
+                return View(marca);
+            }
         }
 
         public IActionResult Eliminar(int id)
         {
-            _marcaDAL.EliminarMarca(id);
-            return RedirectToAction("Index");
+            try
+            {
+                _marcaDAL.EliminarMarca(id);
+                TempData["Mensaje"] = "Marca eliminada con éxito.";
+                return RedirectToAction("Index");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar eliminar la Marca. Por favor, inténtelo de nuevo.";
+
+                return RedirectToAction("Index");
+            }
         }
     }
 }

@@ -26,13 +26,23 @@ namespace CRUD_Practice.Controllers
         [HttpPost]
         public IActionResult Crear(Categoria categoria)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _categoriaDal.InsertarCategoria(categoria);
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    _categoriaDal.InsertarCategoria(categoria);
+                    TempData["Mensaje"] = "Categoría creada exitosamente.";
+                    return RedirectToAction("Index");
+                }
+                return View(categoria);
             }
-            return View(categoria);
-
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error al crear la categoría: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar crear la categoría. Por favor, inténtelo de nuevo.";
+                
+                return View(categoria);
+            }
         }
 
         public IActionResult Editar(int id)
@@ -44,14 +54,39 @@ namespace CRUD_Practice.Controllers
         [HttpPost]
         public IActionResult Editar(Categoria categoria)
         {
-            _categoriaDal.ActualizarCategoria(categoria);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _categoriaDal.ActualizarCategoria(categoria);
+                    TempData["Mensaje"] = "Categoría editado con éxito.";
+                    return RedirectToAction("Index");
+                }
+                return View(categoria);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al editar categoría: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar editar la categoría. Por favor, inténtelo de nuevo.";
+
+                return View(categoria);
+            }   
         }
 
         public IActionResult Eliminar(int id)
         {
-            _categoriaDal.EliminarCategoria(id);
-            return RedirectToAction("Index");
+            try
+            {
+                _categoriaDal.EliminarCategoria(id);
+                TempData["Mensaje"] = "Categoría eliminada con éxito.";
+                return RedirectToAction("Index");
+            }
+            catch(Exception ex) {
+                Console.WriteLine($"Error al eliminar la Categoría: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar eliminar la Categoría. Por favor, inténtelo de nuevo.";
+
+                return RedirectToAction("Index");
+            }
         }
     }
 }

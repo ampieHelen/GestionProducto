@@ -21,8 +21,17 @@ namespace CRUD_ADO.NET_Project.Controllers
 
         public IActionResult Index()
         {
-            var productos = _productoDAL.ObtenerProductos();
-            return View(productos);
+            try
+            {
+                var productos = _productoDAL.ObtenerProductos();
+                return View(productos);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error al crear el producto: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar cargar los productos. Por favor, inténtelo de nuevo.";
+                return View();
+            }
         }
 
         public IActionResult Crear()
@@ -35,14 +44,28 @@ namespace CRUD_ADO.NET_Project.Controllers
         [HttpPost]
         public IActionResult Crear(ProductoDTO producto)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _productoDAL.InsertarProducto(producto);
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    _productoDAL.InsertarProducto(producto);
+                    TempData["Mensaje"] = "Producto creado exitosamente.";
+                    return RedirectToAction("Index");
+                }
+                CargarMarcas();
+                CargarCategorias();
+                return View(producto);
+
             }
-            CargarMarcas();
-            CargarCategorias();
-            return View(producto);
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error al crear el producto: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar crear el producto. Por favor, inténtelo de nuevo.";
+
+                CargarMarcas();
+                CargarCategorias();
+                return View(producto);
+            }
 
         }
 
@@ -57,21 +80,41 @@ namespace CRUD_ADO.NET_Project.Controllers
         [HttpPost]
         public IActionResult Editar(ProductoDTO producto)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _productoDAL.ActualizarProducto(producto);
-                TempData["Mensaje"] = "Producto editado con éxito.";
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    _productoDAL.ActualizarProducto(producto);
+                    TempData["Mensaje"] = "Producto editado con éxito.";
+                    return RedirectToAction("Index");
+                }
+                return View(producto);
 
-            return View(producto);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error al editar el producto: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar editar el producto. Por favor, inténtelo de nuevo.";
+                
+                return View(producto);
+            }
         }
 
         public IActionResult Eliminar(int id)
         {
-            _productoDAL.EliminarProducto(id);
-            TempData["Mensaje"] = "Producto eliminado con éxito.";
-            return RedirectToAction("Index");
+            try
+            {
+                _productoDAL.EliminarProducto(id);
+                TempData["Mensaje"] = "Producto eliminado con éxito.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al eliminar el producto: {ex.Message}");
+                TempData["Error"] = "Ocurrió un error al intentar eliminar el producto. Por favor, inténtelo de nuevo.";
+
+                return RedirectToAction("Index");
+            }  
         }
 
         private void CargarMarcas()
