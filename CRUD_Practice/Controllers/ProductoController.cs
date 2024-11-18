@@ -28,7 +28,7 @@ namespace CRUD_ADO.NET_Project.Controllers
             }
             catch(Exception ex)
             {
-                Console.WriteLine($"Error al crear el producto: {ex.Message}");
+                Console.WriteLine($"Error al cargar productos: {ex.Message}");
                 TempData["Error"] = "Ocurrió un error al intentar cargar los productos. Por favor, inténtelo de nuevo.";
                 return View();
             }

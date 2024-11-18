@@ -1,5 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model List<CRUD_Practice.Models.Stock>
+@await Html.PartialAsync("_Mensajes")
+
+<h2>Stock</h2>
+
+@*<a asp-action="Crear" class="btn btn-primary">Agregar</a>*@
+
+<table class="display" id="table">
+    <thead>
+        <tr>
+            <th>N°</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Marca</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int contador = 1;
+        }
+        @foreach (var stock in Model)
+        {
+            <tr>
+                <td>@contador</td>
+                <td>@stock.Producto</td>
+                <td>@stock.Cantidad</td>
+                <td><b>@stock.Precio</b></td>
+                <td>@stock.Categoria</td>
+                <td>@stock.Marca</td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@stock.ProductoID" class="btn btn-warning">Ver</a>
+                </td>
+            </tr>
+            contador++;
+        }
+    </tbody>
+</table>

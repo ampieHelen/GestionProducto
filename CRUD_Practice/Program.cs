@@ -9,6 +9,7 @@ builder.Services.AddScoped<MarcaDAL>();
 builder.Services.AddScoped<CategoriaDAL>();
 builder.Services.AddScoped<ClienteDAL>();
 builder.Services.AddScoped<ProveedorDAL>();
+builder.Services.AddScoped<StockDAL>();
 
 var app = builder.Build();
 

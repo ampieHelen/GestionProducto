@@ -16,28 +16,31 @@ namespace CRUD_Practice.Data
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public List<Categoria> ObtenerCategorias()
+        public List<Stock> ObtenerStock()
         {
-            var categorias = new List<Categoria>();
+            var stock = new List<Stock>();
             using (var conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand("spGetCategorias", conn);
+                SqlCommand cmd = new SqlCommand("spGetStock", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        categorias.Add(new Categoria
+                        stock.Add(new Stock
                         {
-                            CategoriaID = (int)reader["CategoriaID"],
-                            Nombre = reader["Nombre"].ToString(),
-
+                            ProductoID = (int)reader["ProductoID"],
+                            Producto = reader["Producto"].ToString(),
+                            Cantidad = (int)reader["Cantidad"],
+                            Precio = (decimal)reader["Precio"],
+                            Categoria = reader["Categoria"].ToString(),
+                            Marca = reader["Marca"].ToString()
                         });
                     }
                 }
             }
-            return categorias;
+            return stock;
         }
     }
 }

@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CRUD_Practice.styles.css" asp-append-version="true" />
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.css" />
 </head>
 <body>
     <header>
@@ -21,6 +23,9 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Stock" asp-action="Index">Stock</a>
                         </li>
                         <div class="dropdown">
                             <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -38,9 +43,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Cliente</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Stock" asp-action="Index">Stock</a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="Index">Compras</a>
                         </li>
@@ -69,6 +72,22 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.datatables.net/2.1.5/js/dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table').DataTable({
+                "paging": true,         // Activa la paginación
+                "searching": true,      // Activa la búsqueda
+                "ordering": true,       // Activa la ordenación
+                "info": true,           // Muestra información de la tabla
+                "lengthChange": true,   // Permite cambiar el número de registros mostrados
+                "pageLength": 10,        // Número de registros mostrados por página
+                "language": {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-MX.json"
+                }
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
