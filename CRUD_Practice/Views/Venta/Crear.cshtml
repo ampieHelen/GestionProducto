@@ -1,0 +1,75 @@
+﻿@model Venta
+@await Html.PartialAsync("_Mensajes")
+
+<div class="container">
+    <h2>Registrar Venta</h2>
+    <form asp-action="Crear" asp-controller="Venta" method="post">
+        <div class="form-group">
+            <label for="Cantidad">Cantidad</label>
+            <input asp-for="Cantidad" class="form-control" />
+            <span asp-validation-for="Cantidad" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="TipoDePago">Tipo de Pago</label>
+            <select asp-for="TipoDePago" class="form-control">
+                <option value="">Seleccione un Tipo de Pago</option>
+                <option value="EFECTIVO">Efectivo</option>
+                <option value="TARJETA">Tarjeta</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ClienteID">Cliente</label>
+            <select asp-for="ClienteID" class="form-control" asp-items="ViewBag.Clientes">
+                <option value="">Seleccione un Cliente</option>
+            </select>
+        </div>
+
+        @*<div class="form-group">
+            <label for="Precio">Precio</label>
+            <input asp-for="Precio" class="form-control" />
+            <span asp-validation-for="Precio" class="text-danger"></span>
+        </div>*@
+
+        <div class="form-group">
+            <label for="ProductoID">Producto</label>
+            <select asp-for="ProductoID" class="form-control" asp-items="ViewBag.Productos">
+                <option value="">Seleccione un Producto</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="Precio">Precio</label>
+            <input type="text" id="Precio" class="form-control" asp-for="Precio" readonly />
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+</div>
+<script>
+    document.getElementById("ProductoID").addEventListener("change", function () {
+        const productoID = this.value;
+        const precioInput = document.getElementById("Precio");
+
+        if (!productoID) {
+            precioInput.value = "";
+            return;
+        }
+
+        fetch(`/Venta/ObtenerPrecioProducto?productoID=${productoID}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Error al obtener el precio.");
+                }
+                return response.json();
+            })
+            .then(data => {
+                precioInput.value = data.precio.toFixed(2); // Muestra el precio con dos decimales
+            })
+            .catch(error => {
+                console.error(error);
+                precioInput.value = "Error";
+            });
+    });
+</script>

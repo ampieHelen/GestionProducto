@@ -1,0 +1,44 @@
+﻿@model Compra
+@await Html.PartialAsync("_Mensajes")
+
+<div class="container">
+    <h2>Registrar Compra</h2>
+    <form asp-action="Crear" asp-controller="Compra" method="post">
+        <div class="form-group">
+            <label for="Cantidad">Cantidad</label>
+            <input asp-for="Cantidad" class="form-control" />
+            <span asp-validation-for="Cantidad" class="text-danger"></span>
+        </div>
+       
+        <div class="form-group">
+            <label for="TipoDePago">Tipo de Pago</label>
+            <select asp-for="TipoDePago" class="form-control">
+                <option value="">Seleccione un Tipo de Pago</option>
+                <option value="EFECTIVO">Efectivo</option>
+                <option value="TARJETA">Tarjeta</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ProveedorID">Proveedor</label>
+            <select asp-for="ProveedorID" class="form-control" asp-items="ViewBag.Proveedores">
+                <option value="">Seleccione un Proveedor</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="Costo">Costo</label>
+            <input asp-for="Costo" class="form-control" />
+            <span asp-validation-for="Costo" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label for="ProductoID">Producto</label>
+            <select asp-for="ProductoID" class="form-control" asp-items="ViewBag.Productos">
+                <option value="">Seleccione un Producto</option>
+            </select>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+</div>
+
